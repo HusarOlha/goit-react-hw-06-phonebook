@@ -4,7 +4,7 @@ const contactSlice = createSlice({
   name: 'contacts',
   initialState: INITIAL_STATE.contacts,
   reducers: {
-    setContacts: (state, action) => {
+    setContacts: action => {
       return action.payload;
     },
     addContacts: (state, action) => {
