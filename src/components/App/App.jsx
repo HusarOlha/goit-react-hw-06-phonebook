@@ -4,11 +4,7 @@ import ContactForm from '../ContactForm';
 import Filter from '../Filter';
 import ContactList from 'components/ContactList';
 
-import {
-  setContacts,
-  addContacts,
-  deleteContacts,
-} from 'redux/ContactSlicer/contactSlice';
+import { addContacts, deleteContacts } from 'redux/ContactSlicer/contactSlice';
 
 import { setFilter } from 'redux/contactFilter/contactFilter';
 
