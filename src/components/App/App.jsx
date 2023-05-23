@@ -4,7 +4,7 @@ import ContactForm from '../ContactForm';
 import Filter from '../Filter';
 import ContactList from 'components/ContactList';
 
-import { addContacts, deleteContacts } from 'redux/ContactSlicer/contactSlice';
+import { addContact, deleteContact } from 'redux/contactSlice/contactSlice';
 
 import { setFilter } from 'redux/contactFilter/contactFilter';
 
@@ -13,10 +13,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Container, Title } from './App.styled';
 
 export const App = () => {
-  const contacts = useSelector(state => state.contacts);
+  const contacts = useSelector(state => state.contacts.contacts);
   const filter = useSelector(state => state.filter);
   const dispatch = useDispatch();
-  console.log(contacts);
 
   const handleSubmit = ({ name, number }, { resetForm }) => {
     const nameExists = contacts.some(contact => contact.name === name);
@@ -24,8 +23,9 @@ export const App = () => {
       alert(`${name} is already in contacts`);
       return;
     }
-    const newContact = { name, number, id: nanoid() };
-    dispatch(addContacts(newContact));
+    const newContact = { id: nanoid(), name, number };
+    console.log(newContact);
+    dispatch(addContact(newContact));
     resetForm({ name: '', number: '' });
   };
 
@@ -36,13 +36,15 @@ export const App = () => {
 
   const getVisibleContacts = () => {
     const normalizedFilter = filter.toLowerCase();
-    return contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
+    return contacts.filter(
+      contact =>
+        contact.name &&
+        typeof contact.name === 'string' &&
+        contact.name.toLowerCase().includes(normalizedFilter)
     );
   };
-
   const handleDelete = contactId => {
-    dispatch(deleteContacts(contactId));
+    dispatch(deleteContact(contactId));
   };
 
   return (
